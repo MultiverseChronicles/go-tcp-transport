@@ -2,11 +2,11 @@ module github.com/MultiverseChronicles/go-tcp-transport
 
 go 1.24.0
 
-require github.com/MultiverseChronicles/go-libp2p v0.22.0
+require github.com/MultiverseChronicles/go-libp2p v0.22.1
 
 require (
-	github.com/MultiverseChronicles/go-libp2p/core/crypto v0.0.0-20250804153901-e8b7fcc1efad // indirect
-	github.com/MultiverseChronicles/go-libp2p/core/internal/catch v0.0.0-20250804153901-e8b7fcc1efad // indirect
+	github.com/MultiverseChronicles/go-libp2p/core/crypto v0.0.0-20250804165807-445556b35ecb // indirect
+	github.com/MultiverseChronicles/go-libp2p/core/internal/catch v0.0.0-20250804165807-445556b35ecb // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 // indirect
