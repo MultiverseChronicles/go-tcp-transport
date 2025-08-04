@@ -3,7 +3,7 @@ module github.com/libp2p/go-tcp-transport
 go 1.17
 
 require (
-	github.com/libp2p/go-libp2p v0.20.0
+	github.com/MultiverseChronicles/go-libp2p v0.20.0
 	github.com/libp2p/go-libp2p-core v0.16.1
 )
 
