@@ -24,12 +24,61 @@ func WithConnectionTimeout(d time.Duration) Option {
 }
 
 // TcpTransport is the TCP transport.
-// Deprecated: use github.com/libp2p/go-libp2p/p2p/transport/tcp.TcpTransport instead.
-type TcpTransport = tcp.TcpTransport
+// TcpTransport is the TCP transport.
+type TcpTransport struct {
+	// Connection upgrader for upgrading insecure stream connections to
+	// secure multiplex connections.
+	upgrader transport.Upgrader
+
+	// optional custom dialer to use for dialing. If set, it will be the *ONLY* dialer
+	// used. The transport will not attempt to reuse the listen port to
+	// dial or the shared TCP transport for dialing.
+	overrideDialerForAddr DialerForAddr
+
+	disableReuseport bool // Explicitly disable reuseport.
+	enableMetrics    bool
+
+	// share and demultiplex TCP listeners across multiple transports
+	sharedTcp *tcpreuse.ConnMgr
+
+	// TCP connect timeout
+	connectTimeout time.Duration
+
+	rcmgr network.ResourceManager
+
+	reuse reuseport.Transport
+
+	metricsCollector *aggregatingCollector
+}
+
+var _ transport.Transport = &TcpTransport{}
+var _ transport.DialUpdater = &TcpTransport{}
 
 // NewTCPTransport creates a tcp transport object that tracks dialers and listeners
 // created. It represents an entire TCP stack (though it might not necessarily be).
 // Deprecated: use github.com/libp2p/go-libp2p/p2p/transport/tcp.NewTCPTransport instead.
+/* 
 func NewTCPTransport(upgrader transport.Upgrader, rcmgr network.ResourceManager, opts ...Option) (*TcpTransport, error) {
 	return tcp.NewTCPTransport(upgrader, rcmgr, opts...)
+}
+ */
+
+// NewTCPTransport creates a tcp transport object that tracks dialers and listeners
+// created.
+func NewTCPTransport(upgrader transport.Upgrader, rcmgr network.ResourceManager, sharedTCP *tcpreuse.ConnMgr, opts ...Option) (*TcpTransport, error) {
+	if rcmgr == nil {
+		rcmgr = &network.NullResourceManager{}
+	}
+	tr := &TcpTransport{
+		upgrader:       upgrader,
+		connectTimeout: defaultConnectTimeout, // can be set by using the WithConnectionTimeout option
+		rcmgr:          rcmgr,
+		sharedTcp:      sharedTCP,
+	}
+	for _, o := range opts {
+		if err := o(tr); err != nil {
+			return nil, err
+		}
+	}
+	return tr, nil
 }
