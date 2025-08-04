@@ -4,10 +4,10 @@ package tcp
 import (
 	"time"
 
-	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/transport"
+	"github.com/MultiverseChronicles/go-libp2p-core/network"
+	"github.com/MultiverseChronicles/go-libp2p-core/transport"
 
-	"github.com/libp2p/go-libp2p/p2p/transport/tcp"
+	"github.com/MultiverseChronicles/go-libp2p/p2p/transport/tcp"
 )
 
 // Deprecated: use github.com/libp2p/go-libp2p/p2p/transport/tcp.Option instead.
