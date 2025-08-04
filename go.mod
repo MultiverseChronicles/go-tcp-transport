@@ -1,4 +1,4 @@
-module go-tcp-transport
+module github.com/MultiverseChronicles/go-tcp-transport
 
 go 1.24.0
 
